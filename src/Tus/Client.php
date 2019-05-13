@@ -91,6 +91,28 @@ class Client extends AbstractTus
     }
 
     /**
+     * Set file from File.
+     *
+     * @param File $file existing File object.
+     *
+     * @return Client
+     */
+    public function fromFile(File $file) : self
+    {
+		$fileMeta = $file->details();
+
+        $this->filePath = $fileMeta['file_path'];
+        $this->fileName = $fileMeta['name'];
+        $this->fileSize = $fileMeta['size'];
+        $this->partialOffset = $fileMeta['offset'];
+        $this->checksum = $fileMeta['checksum'];
+
+        $this->key = $file->getKey();
+
+        return $this;
+    }
+
+    /**
      * Get file path.
      *
      * @return string|null
